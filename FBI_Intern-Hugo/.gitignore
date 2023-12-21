@@ -1,0 +1,10 @@
+*.html
+*.csv
+*.zip
+*.gz
+*.jpg
+*.xlsx
+*.xls
+*.exe
+*.chromedriver
+#*.json

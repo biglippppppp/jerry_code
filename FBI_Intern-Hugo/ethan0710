@@ -1,0 +1,67 @@
+import re
+from collections import Counter
+
+def find_most_common_substring(strings):
+    # 将字符串列表连接成一个字符串
+    text = ' '.join(strings)
+
+    # 进行字节对编码
+    bpe_tokens = re.findall(r'\w+|\S', text)  # 根据需要的分隔符调整正则表达式
+
+    # 统计字节对编码后的连续子字符串出现的频次
+    substring_counter = Counter(bpe_tokens)
+
+    # 找到频次最高的连续子字符串
+    most_common_substring = substring_counter.most_common(1)[0][0]
+
+    return most_common_substring
+
+strings = ['德周tvgame-竹北店', '德周tvgam', '德周tvgam 3,240(01/30期)', 
+           '德周tvgam 2,240(02/32期)', '德周tvgam 240(07/21期)']
+result = find_most_common_substring(strings)
+print("最常出现的连续子字符串：", result)
+
+import re
+# pattern = r'^(.+?)\s+\d+.*\(\d+/\d+期\)'
+# pattern = r'([A-Za-z|\u4e00-\u9fff|\*\-|0-9]+) (.+)\(\d+/\d+期\)'
+pattern = r'([A-Za-z|\u4e00-\u9fff|\*]+)([\*\-|0-9]+)? (.+)\(\d+/\d+期\)'
+
+
+def extract_text(text, pattern):
+    match = re.search(pattern, text)
+    if match:
+        text = match.group(1)
+    return text
+
+# 测试示例数据
+strings = [
+    "playstation 01 * 32,22",
+    "元大人壽111 333,22(01/02期)",
+    "富邦人壽10* 6632,22(01/30期)",
+    "德周太平店 143,00(01/36期)",
+    "連家*家樂福 6632,22(01/30期)",
+    "連家*網購-9 6632,22(01/30期)",
+    "playstation 01 * 32,22(01/02期)"
+]
+
+for string in strings:
+    result = extract_text(string,pattern)
+    print(f"{string} > {result}")
+
+
+def longestPalindrome(self, s: str) -> str:
+  if len(s) <= 1 or s == s[::-1]:
+    return s
+  else:
+    maxlen = 1
+    start = 0
+    for i in range(1, len(s)):
+      odd = s[i-maxlen-1 : i+1]
+      even = s[i-maxlen : i+1]
+      if i-maxlen-1 >= 0 and odd == odd[::-1]:
+        start = i-maxlen-1
+        maxlen = maxlen + 2
+        continue
+      if even == even[::-1]:
+        start = i-maxlen
+        maxlen = maxlen + 1
